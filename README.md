@@ -17,11 +17,12 @@ Connect to an instance:
 
     client = Appdash::Client.new host: "remote.host", port: 7701, max_buffer_size: 20
 
-Collect events:
+Collect spans:
 
-    root = client.collect(Appdash::Event::SpanName("Query"))
-
-
+    client.span do |s|
+      s.name "Request"
+      s.log "a log entry with a timestamp"
+    end
 
 For full options and event types, please see the [Documentation](http://www.rubydoc.info/gems/appdash).
 

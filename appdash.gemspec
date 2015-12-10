@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.email         = ["dimitrij@blacksquaremedia.com"]
   s.summary       = %q{Appdash client for ruby}
   s.description   = %q{Ruby client for Appdash, Sourcegraph's application tracing system, based on Google's Dapper}
-  s.homepage      = "https://github.com/bsm/ruby-appdash"
+  s.homepage      = "https://github.com/bsm/appdash-rb"
   s.required_ruby_version = '>= 1.9.0'
 
   s.files         = `git ls-files`.split($/)
