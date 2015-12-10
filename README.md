@@ -24,6 +24,18 @@ Collect spans:
       s.log "a log entry with a timestamp"
     end
 
+Rack middleware:
+
+    require 'sinatra'
+    require 'appdash/middleware'
+
+    client = Appdash::Client.new host: "remote.host", port: 7701
+    use Appdash::Middleware, client
+
+    get '/' do
+      "OK"
+    end
+
 For full options and event types, please see the [Documentation](http://www.rubydoc.info/gems/appdash).
 
 ## Contributing

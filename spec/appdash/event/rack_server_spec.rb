@@ -5,7 +5,7 @@ RSpec.describe Appdash::Event::RackServer do
   let(:time)     { Time.utc(2001,2,3,4,5,6) }
   let(:response) { Rack::Response.new([], 201, 'Content-Length' => 33) }
   let(:request) do
-    env = Rack::MockRequest.env_for("http://example.com:8080/", "REMOTE_ADDR" => "10.10.10.10", 'CONTENT_LENGTH' => 12, 'HTTP_USER_AGENT' => 'Test/1.0')
+    env = Rack::MockRequest.env_for("http://example.com:8080/path?a=1", "REMOTE_ADDR" => "10.10.10.10", 'CONTENT_LENGTH' => 12, 'HTTP_USER_AGENT' => 'Test/1.0')
     Rack::Request.new(env)
   end
 
@@ -24,12 +24,12 @@ RSpec.describe Appdash::Event::RackServer do
       "Server.Request.Method" => "GET",
       "Server.Request.Scheme" => "http",
       "Server.Request.RemoteIP" => "10.10.10.10",
-      "Server.Request.URL" => "http://example.com:8080/",
+      "Server.Request.Path" => "/path?a=1",
       "Server.Request.UserAgent" => "Test/1.0",
-      "Server.Response.ContentLength" => "0",
+      "Server.Response.ContentLength" => "33",
       "Server.Response.StatusCode" => "201",
       "Server.Route" => "createPost",
-      "Server.Send" => "2001-02-03T04:05:06+00:00",
+      "Server.Send" => "2001-02-03T04:05:06.000000+00:00",
       "_schema:HTTPServer" => "",
     )
   end

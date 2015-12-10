@@ -14,7 +14,7 @@ RSpec.describe Appdash::Event::Base do
       "Name" => "Query",
       "SomeOther" => "2",
       "Sub.ReqURL" => "http://example.com/path",
-      "Sub.Nest.V"=>"2015-01-01T00:00:00+00:00",
+      "Sub.Nest.V"=>"2015-01-01T00:00:00.000000+00:00",
       "_schema:test"=>"",
     )
   end

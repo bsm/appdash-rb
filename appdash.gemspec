@@ -20,4 +20,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency(%q<rack>)
   s.add_development_dependency(%q<bundler>)
   s.add_development_dependency(%q<rspec>)
+  s.add_development_dependency(%q<rack-test>)
 end

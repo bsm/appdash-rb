@@ -24,6 +24,8 @@ GEM
       thor
       thread_safe
     rack (1.6.4)
+    rack-test (0.6.3)
+      rack (>= 1.0)
     rake (10.4.2)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
@@ -50,6 +52,7 @@ DEPENDENCIES
   appdash!
   bundler
   rack
+  rack-test
   rake
   rspec
 

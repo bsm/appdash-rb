@@ -39,7 +39,7 @@ module Appdash
         def annotation(key, value = nil)
           case value
           when DateTime, Time
-            value = value.strftime('%FT%T%:z')
+            value = value.strftime('%FT%T.%6N%:z')
           when NilClass
             # ignore
           else

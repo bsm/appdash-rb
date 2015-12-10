@@ -27,7 +27,7 @@ module Appdash
         def parse_request(req)
           data = {
             method: req.request_method,
-            url: req.url,
+            path: req.fullpath,
             scheme: req.scheme,
             host: req.host,
             remote_ip: req.ip,
@@ -44,7 +44,7 @@ module Appdash
 
         def parse_response(resp)
           {
-            content_length: resp.length,
+            content_length: resp.content_length,
             status_code: resp.status
           }
         end

@@ -14,7 +14,7 @@ RSpec.describe Appdash::Event::Log do
   it "should annotate" do
     expect(atoh(subject.to_a)).to eq(
       "Msg" => "Hi",
-      "Time" => "2001-02-03T04:05:06+00:00",
+      "Time" => "2001-02-03T04:05:06.000000+00:00",
       "_schema:log" => "",
     )
   end
