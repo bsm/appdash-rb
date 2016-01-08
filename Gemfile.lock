@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    appdash (0.6.0)
+    appdash (0.6.1)
       protobuf
 
 GEM
