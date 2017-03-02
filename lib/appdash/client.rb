@@ -1,5 +1,6 @@
 require 'socket'
 require 'thread'
+require 'appdash/buffer'
 
 module Appdash
   class Client
@@ -8,19 +9,19 @@ module Appdash
     DEFAULTS = {
       host: 'localhost',
       port: 7701,
-      max_buffer_size: 1,
+      max_buffer_size: 0,
     }.freeze
 
     # Initializes a new client
     # @param [Hash] opts
     # @option opts [String] :host the hostname, defaults to localhost
     # @option opts [Integer] :port the port, defaults to 7701
-    # @option opts [Integer] :max_buffer_size number of spans in the buffer before flushing, defaults to 1 (= no buffering)
+    # @option opts [Integer] :max_buffer_size maximum buffer size in bytes, defaults to 0 (= no buffering, flushes on every span)
     def initialize(opts = {})
       @config = DEFAULTS.merge(opts)
-      @sock   = TCPSocket.new @config[:host], @config[:port]
-      @buffer = []
+      @buffer = Buffer.new
       @mutex  = Mutex.new
+      reconnect!
     end
 
     # Traces a new span with a series of associated events. Accepts an optional block. If no block is given you must flush
@@ -50,27 +51,41 @@ module Appdash
       end
     end
 
-    # Shutdown flushes any remaining buffered packets and closes the connection
-    def shutdown
+    # Close flushes any remaining buffered packets and closes the connection
+    def close
       flush_buffer!
-      @sock.shutdown
+      @sock.close
     end
 
     private
 
       def write(packets)
         packets.each do |packet|
-          raw = Protobuf::Field::VarintField.encode(packet.bytesize)+packet
-          @buffer.push(raw)
+          @buffer.push(packet)
         end
-        flush_buffer! unless @buffer.size < @config[:max_buffer_size]
+        flush_buffer! if @buffer.bytesize > @config[:max_buffer_size]
       end
 
       def flush_buffer!
-        @mutex.synchronize do
-          @sock.write @buffer.join("\n") unless @buffer.empty?
-          @buffer.clear
+        with_reconnect do
+          @mutex.synchronize do
+            @sock.write @buffer.string unless @buffer.bytesize.zero?
+            @buffer.reset
+          end
         end
+      end
+
+      def reconnect!
+        @sock.close if @sock
+        @sock = TCPSocket.new @config[:host], @config[:port]
+      end
+
+      def with_reconnect(attempt = 0, &block)
+        yield
+      rescue Errno::EPIPE
+        raise if attempt > 1
+        reconnect!
+        with_reconnect(attempt+1, &block)
       end
 
   end

@@ -24,8 +24,8 @@ RSpec.describe Appdash::Span do
 
     expect(mock_client).to receive(:write) do |packets|
       expect(packets.size).to eq(2)
-      expect(packets[0].bytesize).to eq(50)
-      expect(packets[1].bytesize).to eq(65)
+      expect(packets[0].annotation.map(&:to_hash)).to eq([{key: "Name", value: "test"}, {key: "_schema:name"}])
+      expect(packets[1].annotation.map(&:to_hash)).to eq([{key: "Msg", value: "test message"}, {key: "_schema:msg"}])
     end
     expect(subject.flush).to eq(2)
   end

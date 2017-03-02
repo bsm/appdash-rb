@@ -4,7 +4,7 @@ module Appdash
   module Event
 
     # RackServer represents a HTTP event where a client's request was served via Rack.
-    class RackServer < Appdash::Event::Base
+    class RackServer < Base
 
       # @param [Rack::Request] req a Rack request object
       # @param [Rack::Response] resp an optional Rack response object

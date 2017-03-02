@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(spec)/})
   s.require_paths = ["lib"]
 
-  s.add_dependency(%q<protobuf>)
+  s.add_dependency(%q<ruby-protocol-buffers>)
 
   s.add_development_dependency(%q<rake>)
   s.add_development_dependency(%q<rack>)

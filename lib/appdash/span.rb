@@ -33,7 +33,7 @@ module Appdash
 
     # Appends a generic Appdash::Event event
     def event(evt)
-      @packets.push Appdash::CollectPacket.encode(evt, @id)
+      @packets.push Appdash::CollectPacket.build(evt, @id)
       @id = @id.child
     end
 

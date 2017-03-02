@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Appdash::Client do
 
-  let(:mock_socket) { double("TCPSocket", shutdown: nil) }
+  let(:mock_socket) { double("TCPSocket", close: nil) }
   before  { allow(TCPSocket).to receive(:new).and_return(mock_socket) }
 
   it "should collect spans" do
@@ -17,16 +17,17 @@ RSpec.describe Appdash::Client do
   end
 
   it "should support buffering" do
-    subject = described_class.new(max_buffer_size: 3)
+    subject = described_class.new(max_buffer_size: 1000)
     subject.span do |s|
       s.message("Message A")
       s.message("Message B")
     end
 
     expect(mock_socket).to receive(:write) do |raw|
-      expect(raw.bytesize).to eq(118)
+      expect(raw.bytesize).to eq(117)
     end
-    subject.shutdown
+    subject.close
   end
 
 end
+
