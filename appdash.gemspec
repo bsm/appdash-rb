@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name          = "appdash"
-  s.version       = "0.6.1"
+  s.version       = "0.6.2"
   s.authors       = ["Black Square Media"]
   s.email         = ["dimitrij@blacksquaremedia.com"]
   s.summary       = %q{Appdash client for ruby}

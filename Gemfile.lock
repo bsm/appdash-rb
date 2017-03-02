@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    appdash (0.6.1)
+    appdash (0.6.2)
       ruby-protocol-buffers
 
 GEM
